@@ -1,20 +1,17 @@
-// BotonGuardarGasto.tsx
 'use client';
 import React from 'react';
-import { useContextGastos } from '@/Context/ProviderGastos';
+import { useContextGastos } from '@/Context/ContextGastos';
 import { Gastos } from '@/Modelos/Gastos';
 
-
-
 interface BotonGuardarGastoProps {
-    gasto: Gastos; 
+    gasto: Gastos
 }
 
 const BotonGuardarGasto: React.FC<BotonGuardarGastoProps> = ({ gasto }) => {
     const { setGastos } = useContextGastos();
 
     const handleSave = () => {
-        fetch('http://localhost:5000/gasto', {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/gasto`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,18 +20,16 @@ const BotonGuardarGasto: React.FC<BotonGuardarGastoProps> = ({ gasto }) => {
         })
         .then(response => response.json())
         .then(data => {
-            // Actualiza la lista de gastos en el contexto
-            setGastos(prev => [...prev, data]); // Suponiendo que 'data' es el gasto guardado
-            alert('Gasto guardado con éxito!');
+           
+            setGastos(prev => [...prev, data])
+            alert('Gasto guardado con éxito!')
         })
-        .catch(error => console.error('Error al guardar gasto:', error));
-    };
+        .catch(error => console.error('Error al guardar gasto:', error))
+    }
 
     return (
-        <button onClick={handleSave} className="btn btn-primary">
-            Guardar Gasto
-        </button>
-    );
-};
+        <button onClick={handleSave} className="btn btn-primary">Guardar</button>
+    )
+}
 
-export default BotonGuardarGasto;
+export default BotonGuardarGasto

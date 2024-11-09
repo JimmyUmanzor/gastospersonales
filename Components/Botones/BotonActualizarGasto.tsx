@@ -1,9 +1,7 @@
-
 'use client';
 import React from 'react';
-import { useContextGastos } from '@/Context/ProviderGastos';
+import { useContextGastos } from '@/Context/ContextGastos';
 import { Gastos } from '@/Modelos/Gastos';
-
 
 
 interface BotonActualizarGastoProps {
@@ -11,10 +9,10 @@ interface BotonActualizarGastoProps {
 }
 
 const BotonActualizarGasto: React.FC<BotonActualizarGastoProps> = ({ gasto }) => {
-    const { setGastos } = useContextGastos();
+    const { setGastos } = useContextGastos()
 
     const handleUpdate = () => {
-        fetch(`http://localhost:5000/gasto/${gasto.idgasto}`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/gasto/${gasto.idgasto}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,17 +22,15 @@ const BotonActualizarGasto: React.FC<BotonActualizarGastoProps> = ({ gasto }) =>
         .then(response => response.json())
         .then(data => {
             
-            setGastos(prev => prev.map(g => (g.idgasto === gasto.idgasto ? data : g)));
-            alert('Gasto actualizado con éxito!');
+            setGastos(prev => prev.map(g => (g.idgasto === gasto.idgasto ? data : g)))
+            alert('Registro actualizado con éxito!')
         })
-        .catch(error => console.error('Error al actualizar gasto:', error));
-    };
+        .catch(error => console.error('Error al actualizar gastos', error))
+    }
 
     return (
-        <button onClick={handleUpdate} className="btn btn-success">
-            Actualizar Gasto
-        </button>
-    );
-};
+        <button onClick={handleUpdate} className="btn btn-success">Actualizar</button>
+    )
+}
 
-export default BotonActualizarGasto;
+export default BotonActualizarGasto

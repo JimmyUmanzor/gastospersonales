@@ -19,3 +19,11 @@ body {
 .alert-danger {
     background-color: #f8d7da; 
 }
+
+.nav-link {
+    color: gray;
+}
+
+.nav-link.active {
+    color: white !important;
+}
